@@ -1,0 +1,2 @@
+rootProject.name = "Ktuki Lite"
+include ':app'
