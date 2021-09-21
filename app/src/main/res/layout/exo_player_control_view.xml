@@ -4,49 +4,33 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
+    android:background="@color/exo_player_control_bg"
+    android:gravity="center_vertical"
     android:layoutDirection="ltr"
-    android:background="#CC000000"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     tools:targetApi="28">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+
+    <ImageButton
+        android:id="@id/exo_play"
+        style="@style/ExoMediaButton.Play" />
+
+    <ImageButton
+        android:id="@id/exo_pause"
+        style="@style/ExoMediaButton.Pause" />
+
+    <View
+        android:id="@id/exo_progress_placeholder"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/video_progressbar_height"
+        android:layout_weight="1" />
+
+    <ImageView
+        android:id="@+id/exo_fullscreen_icon"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-        <ImageButton android:id="@id/exo_play"
-            style="@style/ExoMediaButton.Play"/>
-        <ImageButton android:id="@id/exo_pause"
-            style="@style/ExoMediaButton.Pause"/>
-        <TextView android:id="@id/exo_position"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:paddingRight="4dp"
-            android:includeFontPadding="false"
-            android:textColor="#FFBEBEBE"/>
-        <View android:id="@id/exo_progress_placeholder"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="26dp"/>
-        <TextView android:id="@id/exo_duration"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp"
-            android:includeFontPadding="false"
-            android:textColor="#FFBEBEBE"/>
-        <ImageView
-            android:id="@+id/exo_fullscreen_icon"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_gravity="center"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_baseline_fullscreen_open"/>
-    </LinearLayout>
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_baseline_fullscreen_open"
+        android:layout_weight="0.03" />
+
 </LinearLayout>

@@ -6,8 +6,9 @@
 
     <ImageView
         android:id="@+id/thumbnail"
-        android:layout_width="128dp"
-        android:layout_height="96dp"
-        android:src="@drawable/ic_launcher_background"/>
+        android:layout_width="@dimen/video_thumbnail_width"
+        android:layout_height="@dimen/video_thumbnail_height"
+        android:padding="@dimen/dimen_4"
+        android:background="@drawable/thumbnail_border"/>
 
 </FrameLayout>

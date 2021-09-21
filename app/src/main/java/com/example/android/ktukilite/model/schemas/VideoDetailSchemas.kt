@@ -1,4 +1,4 @@
-package com.example.android.ktukilite.model
+package com.example.android.ktukilite.model.schemas
 
 import android.os.Parcel
 import android.os.Parcelable
@@ -57,4 +57,20 @@ class VideoDetailItem() : Parcelable {
     }
 
 
+}
+
+class VideoDetailResponse {
+    @SerializedName("videos")
+    @Expose
+    var videoDetailList: Map<String, VideoDetailItem>? = null
+}
+
+class VideoDetailServerResponse {
+    @SerializedName("code")
+    @Expose
+    var code: String? = null
+
+    @SerializedName("response")
+    @Expose
+    var response: VideoDetailResponse? = null
 }

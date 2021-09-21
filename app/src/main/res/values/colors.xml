@@ -8,5 +8,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="custom_color">#00e5ff</color>
+    <color name="exo_player_control_bg">#CC000000</color>
 
 </resources>

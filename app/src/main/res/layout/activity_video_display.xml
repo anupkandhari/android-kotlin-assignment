@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.VideoDisplayActivity"
+    tools:context=".view.activities.VideoDisplayActivity"
     android:background="@color/custom_color">
 
     <Button
@@ -13,22 +13,20 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="@color/purple_700"
-        android:text="Back"
-        app:cornerRadius="@dimen/button_corner_radius" />
+        android:layout_margin="@dimen/dimen_16"
+        android:background="@drawable/rounded_corner"
+        android:text="@string/back_button_text"/>
 
     <com.google.android.exoplayer2.ui.PlayerView
         android:id="@+id/ep_video_view"
-        android:layout_width="400dp"
-        android:layout_height="200dp"
+        android:layout_width="@dimen/video_player_width"
+        android:layout_height="@dimen/video_player_height"
         app:resize_mode="fill"
         android:layout_centerInParent="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="@dimen/dimen_16">
+        android:layout_marginTop="@dimen/dimen_16"
+        android:padding="@dimen/dimen_4"
+        android:background="@drawable/image_border">
 
         <ProgressBar
             android:id="@+id/progress_bar"

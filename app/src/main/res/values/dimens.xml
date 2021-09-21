@@ -5,6 +5,11 @@
     <dimen name="dimen_32">32dp</dimen>
     <dimen name="dimen_48">48dp</dimen>
     <dimen name="dimen_64">64dp</dimen>
-    <dimen name="dimen_56">56dp</dimen>
-    <dimen name="button_corner_radius">32dp</dimen>
+    <dimen name="category_icon_margin">56dp</dimen>
+    <dimen name="video_player_width">450dp</dimen>
+    <dimen name="video_player_height">250dp</dimen>
+    <dimen name="video_thumbnail_width">128dp</dimen>
+    <dimen name="video_thumbnail_height">96dp</dimen>
+    <dimen name="video_progressbar_height">24dp</dimen>
+    <dimen name="dimen_4">4dp</dimen>
 </resources>

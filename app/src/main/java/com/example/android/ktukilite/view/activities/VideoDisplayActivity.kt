@@ -1,8 +1,7 @@
-package com.example.android.ktukilite.ui
+package com.example.android.ktukilite.view.activities
 
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
@@ -10,8 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.ktukilite.R
-import com.example.android.ktukilite.model.VideoDetailItem
-import com.example.android.ktukilite.ui.adapters.VideoListAdapter
+import com.example.android.ktukilite.model.schemas.VideoDetailItem
+import com.example.android.ktukilite.view.adapters.VideoListAdapter
 import com.google.android.exoplayer2.PlaybackException
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
@@ -26,6 +25,7 @@ class VideoDisplayActivity : AppCompatActivity(), VideoListAdapter.OnItemClickLi
     Player.Listener {
 
     private lateinit var videoListRecyclerView: RecyclerView
+    private lateinit var videoListAdapter: VideoListAdapter
     private lateinit var videoView: PlayerView
     private lateinit var progressBar: ProgressBar
     private lateinit var backButton: Button
@@ -45,34 +45,40 @@ class VideoDisplayActivity : AppCompatActivity(), VideoListAdapter.OnItemClickLi
         setContentView(R.layout.activity_video_display)
         videoView = findViewById(R.id.ep_video_view)
         progressBar = findViewById(R.id.progress_bar)
-        fullScreenButton = videoView.findViewById(R.id.exo_fullscreen_icon);
+        fullScreenButton = videoView.findViewById(R.id.exo_fullscreen_icon)
         setUpFullScreenButton()
-        backButton = findViewById<Button>(R.id.back_button)
+        backButton = findViewById(R.id.back_button)
         backButton.setOnClickListener { finish() }
 
 
-        videoItemList = intent.getSerializableExtra("data") as List<VideoDetailItem>
-        videoListRecyclerView = findViewById<RecyclerView>(R.id.thumbnail_recycler_view)
+        videoItemList =
+            intent.getSerializableExtra(VideoCategoryActivity.VIDEO_DETAIL_DATA) as List<VideoDetailItem>
+        videoListRecyclerView = findViewById(R.id.thumbnail_recycler_view)
 
         videoListRecyclerView.layoutManager =
             LinearLayoutManager(applicationContext, LinearLayoutManager.HORIZONTAL, false)
 
-        val adapter = VideoListAdapter(videoItemList, this)
-        videoListRecyclerView.adapter = adapter
+        videoListAdapter = VideoListAdapter(videoItemList)
+        videoListRecyclerView.adapter = videoListAdapter
+        videoListAdapter.setOnItemClickListener(this)
 
 
     }
 
     private fun setUpFullScreenButton() {
-        fullScreenButton.setOnClickListener(View.OnClickListener {
+        fullScreenButton.setOnClickListener {
             if (fullscreen) {
+
                 fullScreenButton.setBackgroundResource(R.drawable.ic_baseline_fullscreen_open)
 
                 val params = videoView.layoutParams as RelativeLayout.LayoutParams
-                val density = applicationContext.resources.displayMetrics.density
-                params.width = (400 * density).toInt()//ViewGroup.LayoutParams.MATCH_PARENT
-                params.height = (200 * density).toInt()
-                params.topMargin = (16 * density).toInt()
+
+                params.width =
+                    applicationContext.resources.getDimension(R.dimen.video_player_width).toInt()
+                params.height =
+                    applicationContext.resources.getDimension(R.dimen.video_player_height).toInt()
+                params.topMargin =
+                    applicationContext.resources.getDimension(R.dimen.dimen_16).toInt()
                 videoView.layoutParams = params
                 fullscreen = false
                 videoListRecyclerView.visibility = View.VISIBLE
@@ -92,7 +98,7 @@ class VideoDisplayActivity : AppCompatActivity(), VideoListAdapter.OnItemClickLi
 
 
             }
-        })
+        }
     }
 
 
@@ -124,7 +130,7 @@ class VideoDisplayActivity : AppCompatActivity(), VideoListAdapter.OnItemClickLi
         simpleExoplayer.addListener(this)
     }
 
-    private fun buildMediaSource(uri: Uri, type: String): MediaSource {
+    private fun buildMediaSource(uri: Uri): MediaSource {
         return ProgressiveMediaSource.Factory(dataSourceFactory)
             .createMediaSource(uri)
     }
@@ -132,7 +138,7 @@ class VideoDisplayActivity : AppCompatActivity(), VideoListAdapter.OnItemClickLi
     private fun preparePlayer() {
         val videoUrl = videoItemList[selectedVideoPos].videoURL
         val uri = Uri.parse(videoUrl)
-        val mediaSource = buildMediaSource(uri, "default")
+        val mediaSource = buildMediaSource(uri)
         simpleExoplayer.prepare(mediaSource)
         simpleExoplayer.seekTo(playbackPosition)
         simpleExoplayer.playWhenReady = true
@@ -144,8 +150,7 @@ class VideoDisplayActivity : AppCompatActivity(), VideoListAdapter.OnItemClickLi
     }
 
     override fun onPlayerError(error: PlaybackException) {
-        // handle error
-        Log.e("VideoDisplayActivity", "Problem playing video {${error.message}}")
+        Toast.makeText(this, R.string.audio_playback_error, Toast.LENGTH_SHORT).show()
     }
 
     override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
@@ -157,7 +162,12 @@ class VideoDisplayActivity : AppCompatActivity(), VideoListAdapter.OnItemClickLi
 
 
     override fun onItemClick(position: Int) {
+        if (position == selectedVideoPos)
+            return
+        videoListAdapter.setSelected(position)
+        videoListAdapter.notifyItemChanged(selectedVideoPos)
         selectedVideoPos = position
+        videoListAdapter.notifyItemChanged(selectedVideoPos)
         preparePlayer()
 
     }

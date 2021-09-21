@@ -14,12 +14,12 @@
         android:theme="@style/Theme.KtukiLite"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ui.VideoDisplayActivity"
+            android:name=".view.activities.VideoDisplayActivity"
             android:screenOrientation="landscape">
 
         </activity>
         <activity
-            android:name=".ui.VideoCategoryActivity"
+            android:name=".view.activities.VideoCategoryActivity"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
